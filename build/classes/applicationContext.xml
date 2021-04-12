@@ -1,0 +1,39 @@
+<beans 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	">
+	<context:property-placeholder location="classpath:jdbc.properties" />
+	
+	<!-- 数据源移出：properties文件 -->
+	<!-- key-value对文件 -->
+	
+	<!-- spring整合myBatis框架 -->
+	<bean name="dataSource888" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url123}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${password}" />
+	</bean>
+	
+	<!-- factory -->
+	<bean name="myFactory999" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource888" />
+		<property name="configLocation" value="classpath:sqlMapConfig.xml" />
+	</bean>
+	
+	<!-- mapper -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer" >
+		<property name="basePackage" value="jcy.bishe.mappers" />
+		<property name="sqlSessionFactoryBeanName" value="myFactory999" />
+	</bean>
+	
+	
+	
+</beans>
